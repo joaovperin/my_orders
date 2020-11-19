@@ -10,16 +10,15 @@ class AppMoreButtonsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final holder = FocusedMenuHolder(
-      blurSize: 0,
+      blurSize: 2,
+      openWithTap: true,
       menuWidth: MediaQuery.of(context).size.width * .5,
       blurBackgroundColor: Colors.black,
-      duration: Duration(microseconds: 500),
       onPressed: () {},
       menuItems: menuItems,
-      child: IconButton(
-        icon: Icon(Icons.more_vert_rounded),
+      child: Icon(
+        Icons.more_vert_rounded,
         color: Theme.of(context).accentColor,
-        onPressed: () {},
       ),
     );
     return holder;

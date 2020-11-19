@@ -35,8 +35,8 @@ dependencies:
   provider: ^4.3.2+2
   focused_menu:
     git:
-      url: https://github.com/ignaciotcrespo/focused_menu.git
-      ref: onTap
+      url: https://github.com/retroportalstudio/focused_menu.git
+      ref: master
 
 dev_dependencies:
   flutter_test:

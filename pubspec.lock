@@ -71,9 +71,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: onTap
-      resolved-ref: "12c3e379f6cbe4fd15a586c27662813e1d04d5ea"
-      url: "https://github.com/ignaciotcrespo/focused_menu.git"
+      ref: master
+      resolved-ref: "2c1477b3b71aed1b9ff8dda28570c48218188c4f"
+      url: "https://github.com/retroportalstudio/focused_menu.git"
     source: git
     version: "1.0.1"
   intl:
