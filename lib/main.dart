@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'modules//home_page.dart';
 import 'modules/customer/customer_page.dart';
+import 'modules/customer/customers_provider.dart';
 import 'modules/login_page.dart';
 import 'modules/product/product_page.dart';
 import 'modules/product/products_provider.dart';
@@ -28,7 +29,10 @@ class MyApp extends StatelessWidget {
               create: (ctx) => ProductsProvider(),
               child: ProductPage('Produtos'),
             ),
-        AppRoutes.CUSTOMER_LIST: (ctx) => CustomerPage('Clientes'),
+        AppRoutes.CUSTOMER_LIST: (ctx) => ChangeNotifierProvider(
+              create: (ctx) => CustomersProvider(),
+              child: CustomerPage('Clientes'),
+            ),
       },
     );
   }

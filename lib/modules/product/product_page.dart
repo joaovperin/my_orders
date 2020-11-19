@@ -36,7 +36,7 @@ class ProductPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final pr = await Provider.of<ProductsProvider>(ctx, listen: false).addRandomProduct();
+          final pr = await Provider.of<ProductsProvider>(ctx, listen: false).addRandomRegister();
           showScaffold(ctx, 'Produto ${pr.id}-${pr.description} adicionado com sucesso!');
         },
         tooltip: 'Novo Produto',
@@ -47,20 +47,20 @@ class ProductPage extends StatelessWidget {
 
   Widget _productList(BuildContext ctx) {
     return FutureBuilder(
-      future: Provider.of<ProductsProvider>(ctx, listen: false).loadProducts(),
+      future: Provider.of<ProductsProvider>(ctx, listen: false).loadRegisters(),
       builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
           ? _loadingBar(ctx)
           : Consumer<ProductsProvider>(
               child: notFound(),
-              builder: (context, products, child) {
+              builder: (context, provider, child) {
                 // empty list
-                if (products.itemsCount == 0) {
+                if (provider.itemsCount == 0) {
                   return child;
                 }
                 return ListView.builder(
-                  itemCount: products.itemsCount,
+                  itemCount: provider.itemsCount,
                   itemBuilder: (ctx, index) {
-                    final product = products.itemByIndex(index);
+                    final product = provider.itemByIndex(index);
                     return ListTile(
                       leading: Container(
                         padding: EdgeInsets.all(4),

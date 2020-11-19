@@ -7,7 +7,7 @@ class DbUtils {
 
     return sql.openDatabase(
       path.join(dbPath, 'banco.db'),
-      version: 5,
+      version: 7,
       // onUpgrade, drop and create tables
       onUpgrade: (db, oldVersion, newVersion) {
         return Future.wait([
@@ -30,8 +30,10 @@ class DbUtils {
 
   static List<String> _dropTables() {
     return [
-      'DROP TABLE if exists product',
-      'DROP TABLE if exists customer',
+      'DROP TABLE IF EXISTS [order_item]',
+      'DROP TABLE IF EXISTS [order]',
+      'DROP TABLE IF EXISTS [product]',
+      'DROP TABLE IF EXISTS [customer]',
     ];
   }
 
@@ -46,7 +48,7 @@ class DbUtils {
       '''CREATE TABLE customer (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
-                reference TEXT
+                address TEXT
             )''',
     ];
   }
