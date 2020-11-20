@@ -64,20 +64,20 @@ class ProductPage extends StatelessWidget {
 
   Widget _productList(BuildContext ctx) {
     return FutureBuilder(
-      future: Provider.of<ProductsProvider>(ctx, listen: false).loadRegisters(),
+      future: Provider.of<ProductsProvider>(ctx, listen: false).loadList(),
       builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
           ? _loadingBar(ctx)
           : Consumer<ProductsProvider>(
               child: notFound(),
               builder: (context, provider, child) {
                 // empty list
-                if (provider.itemsCount == 0) {
+                if (provider.count == 0) {
                   return child;
                 }
                 return ListView.builder(
-                  itemCount: provider.itemsCount,
+                  itemCount: provider.count,
                   itemBuilder: (ctx, index) {
-                    final product = provider.itemByIndex(index);
+                    final product = provider.getByIndex(index);
                     return ListTile(
                       leading: Container(
                         padding: EdgeInsets.all(4),
@@ -108,7 +108,7 @@ class ProductPage extends StatelessWidget {
                                 trailingIcon: Icon(Icons.delete),
                                 title: const Text('Excluir'),
                                 onPressed: () async {
-                                  await Provider.of<ProductsProvider>(ctx, listen: false).removeRegister(product);
+                                  await Provider.of<ProductsProvider>(ctx, listen: false).delete(product);
                                   showSnackbar(ctx, 'O produto ${product.id}-${product.description} foi removido.');
                                 },
                               ),
@@ -145,7 +145,7 @@ class ProductPage extends StatelessWidget {
           final product = await Provider.of<ProductsProvider>(
             ctx,
             listen: false,
-          ).addRegister(Product(
+          ).save(Product(
             description: description,
             reference: reference,
             value: value,

@@ -63,20 +63,20 @@ class CustomerPage extends StatelessWidget {
 
   Widget _customerList(BuildContext ctx) {
     return FutureBuilder(
-      future: Provider.of<CustomersProvider>(ctx, listen: false).loadRegisters(),
+      future: Provider.of<CustomersProvider>(ctx, listen: false).loadList(),
       builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
           ? _loadingBar(ctx)
           : Consumer<CustomersProvider>(
               child: notFound(),
               builder: (context, provider, child) {
                 // empty list
-                if (provider.itemsCount == 0) {
+                if (provider.count == 0) {
                   return child;
                 }
                 return ListView.builder(
-                  itemCount: provider.itemsCount,
+                  itemCount: provider.count,
                   itemBuilder: (ctx, index) {
-                    final cr = provider.itemByIndex(index);
+                    final cr = provider.getByIndex(index);
                     return ListTile(
                       leading: Container(
                         decoration: BoxDecoration(
@@ -141,7 +141,7 @@ class CustomerPage extends StatelessWidget {
           final customer = await Provider.of<CustomersProvider>(
             ctx,
             listen: false,
-          ).addRegister(Customer(
+          ).save(Customer(
             name: name,
             address: address,
           ));
