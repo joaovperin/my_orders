@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:my_orders/modules/home_page.dart';
 import 'package:my_orders/utils/navigator.dart';
 import 'package:my_orders/modules/user/logged_user_provider.dart';
-import 'package:my_orders/utils/ui.dart';
+import 'package:my_orders/utils/validators.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key}) : super(key: key);
 
+  final _formKey = GlobalKey<FormState>();
   final _tNome = TextEditingController();
 
   @override
@@ -22,12 +23,15 @@ class LoginPage extends StatelessWidget {
   Widget _buildBody(BuildContext ctx) {
     return Container(
       padding: EdgeInsets.all(16),
-      child: ListView(
-        children: <Widget>[
-          _buildText(ctx, "Nome", ctrl: _tNome),
-          SizedBox(height: 20),
-          _button(ctx, "Entrar", _onClickLogin),
-        ],
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            _buildText(ctx, "Nome", ctrl: _tNome),
+            SizedBox(height: 20),
+            _button(ctx, "Entrar", _onClickLogin),
+          ],
+        ),
       ),
     );
   }
@@ -36,6 +40,7 @@ class LoginPage extends StatelessWidget {
     return TextFormField(
       controller: ctrl,
       obscureText: hide,
+      validator: (value) => textNotEmpty(value),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint ?? "Digite o campo ${label.toLowerCase()}",
@@ -54,13 +59,13 @@ class LoginPage extends StatelessWidget {
   }
 
   void _onClickLogin(BuildContext context) async {
-    final name = _tNome.text.trim();
-    if (name.isEmpty) {
-      showSnackbar(context, 'É necessário informar seu nome!');
+    if (!_formKey.currentState.validate()) {
       return;
     }
 
-    LoggedUserProvider.of(context).login(name);
+    FocusScope.of(context).unfocus();
+    // Saves the user name on the loggedUser global provider
+    LoggedUserProvider.of(context).login(_tNome.text.trim());
     push(context, MyHomePage());
   }
 }

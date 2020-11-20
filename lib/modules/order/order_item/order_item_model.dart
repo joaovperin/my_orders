@@ -2,6 +2,18 @@ import 'dart:convert';
 
 import 'package:my_orders/utils/abstract_model.dart';
 
+/// Data access object
+class OrderItemDao extends AbstractModelDao<OrderItem> {
+  static const kTableName = 'order_item';
+  const OrderItemDao() : super(kTableName);
+
+  @override
+  OrderItem fromMap(Map<String, dynamic> map) {
+    return OrderItem.fromMap(map);
+  }
+}
+
+/// Model object
 class OrderItem extends AbstractModel<OrderItem> {
   final int id;
   final int orderId;

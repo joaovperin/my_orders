@@ -13,3 +13,33 @@ icon: emoji_symbols
 icon: emoji_emotions
 icon: fact_check
 icon: filter_list
+
+
+
+# Function parameters
+  static Function noop = (_) {};
+
+  // Create callbacks
+  final void Function(T) beforeSave;
+  final void Function(T) afterSave;
+  // Read callbacks
+  final void Function(int id) beforeRead;
+  final void Function(T) afterRead;
+  // Delete callbacks
+  final void Function(T) beforeDelete;
+  final void Function(T) afterDelete;
+
+  AbstractModelDao(
+    this.tableName, {
+    beforeSave,
+    afterSave,
+    beforeRead,
+    afterRead,
+    beforeDelete,
+    afterDelete,
+  })  : this.beforeSave = beforeSave ?? noop,
+        this.afterSave = afterSave ?? noop,
+        this.beforeRead = beforeRead ?? noop,
+        this.afterRead = afterRead ?? noop,
+        this.beforeDelete = beforeDelete ?? noop,
+        this.afterDelete = afterDelete ?? noop;

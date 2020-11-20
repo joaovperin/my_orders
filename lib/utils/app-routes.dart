@@ -3,4 +3,5 @@ class AppRoutes {
   static const LOGIN_PAGE = '/login';
   static const PRODUCT_LIST = '/product';
   static const CUSTOMER_LIST = '/customer';
+  static const ORDER_LIST = '/order';
 }

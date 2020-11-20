@@ -3,11 +3,8 @@ import 'package:my_orders/utils/abstract_model.dart';
 import 'package:my_orders/utils/string_utils.dart';
 
 class CustomersProvider extends AbstractModelListProvider<Customer> {
-  static const kTableName = 'customer';
+  CustomersProvider() : super(CustomerDao());
 
-  CustomersProvider() : super(kTableName);
-
-  @override
   Customer fromMap(Map<String, dynamic> map) {
     return Customer.fromMap(map);
   }

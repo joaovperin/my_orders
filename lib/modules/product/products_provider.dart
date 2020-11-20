@@ -5,14 +5,7 @@ import 'package:my_orders/utils/abstract_model.dart';
 import 'package:my_orders/utils/string_utils.dart';
 
 class ProductsProvider extends AbstractModelListProvider<Product> {
-  static const kTableName = 'product';
-
-  ProductsProvider() : super(kTableName);
-
-  @override
-  Product fromMap(Map<String, dynamic> map) {
-    return Product.fromMap(map);
-  }
+  ProductsProvider() : super(ProductDao());
 
   Future<Product> addRandomRegister() async {
     final idx = count;

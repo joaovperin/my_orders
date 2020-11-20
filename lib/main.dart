@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'modules/home_page.dart';
+import 'modules/order/order_page.dart';
+import 'modules/order/orders_provider.dart';
 import 'modules/user/logged_user_provider.dart';
 import 'modules/customer/customer_page.dart';
 import 'modules/customer/customers_provider.dart';
@@ -113,6 +115,11 @@ class AppRouter extends StatelessWidget {
         AppRoutes.CUSTOMER_LIST: (ctx) => ChangeNotifierProvider(
               create: (ctx) => CustomersProvider(),
               child: CustomerPage(),
+            ),
+        // Listagem de pedidos
+        AppRoutes.ORDER_LIST: (ctx) => ChangeNotifierProvider(
+              create: (ctx) => OrdersPageProvider(),
+              child: OrderPage(),
             ),
       };
 
