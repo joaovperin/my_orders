@@ -26,7 +26,7 @@ class LoginPage extends StatelessWidget {
         children: <Widget>[
           _buildText(ctx, "Nome", ctrl: _tNome),
           SizedBox(height: 20),
-          _button(ctx, "Login", _onClickLogin),
+          _button(ctx, "Entrar", _onClickLogin),
         ],
       ),
     );

@@ -26,7 +26,7 @@ class AppUserMenu extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Logout'),
+              const Text('Sair'),
               const Icon(Icons.logout),
             ],
           ),
