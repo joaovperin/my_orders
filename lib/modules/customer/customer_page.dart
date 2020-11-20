@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:my_orders/utils/ui.dart';
@@ -15,35 +14,49 @@ class CustomerPage extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: Center(
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                height: 80,
-                child: Text(title),
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  width: double.infinity,
-                  child: Card(
-                    child: _customerList(ctx),
-                  ),
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              height: 80,
+              child: Text(title),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(2),
+                width: double.infinity,
+                child: Card(
+                  child: _customerList(ctx),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            final pr = await Provider.of<CustomersProvider>(ctx, listen: false).addRandomRegister();
-            showScaffold(ctx, 'Cliente ${pr.id}-${pr.name} adicionado com sucesso!');
-          },
-          tooltip: 'Novo Cliente',
-          child: Icon(Icons.add),
-        ));
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: null,
+            mini: true,
+            onPressed: () async {
+              final pr = await Provider.of<CustomersProvider>(ctx, listen: false).addRandomRegister();
+              showScaffold(ctx, 'Cliente ${pr.id}-${pr.name} adicionado com sucesso!');
+            },
+            tooltip: 'Gerar Cliente',
+            child: const BadgeWidget('+', Icon(Icons.person_outline_sharp)),
+          ),
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () => _addNovoCliente(ctx),
+            tooltip: 'Novo Cliente',
+            child: Icon(Icons.add),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _customerList(BuildContext ctx) {
@@ -116,5 +129,10 @@ class CustomerPage extends StatelessWidget {
     return Center(
       child: CircularProgressIndicator(),
     );
+  }
+
+  _addNovoCliente(BuildContext ctx) {
+    actionNotImplemented(ctx, 'incluir cliente');
+    //   final pr = await Provider.of<CustomersProvider>(ctx, listen: false).addRandomRegister();
   }
 }
