@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'modules//home_page.dart';
@@ -9,7 +11,9 @@ import 'modules/product/product_page.dart';
 import 'modules/product/products_provider.dart';
 import 'utils/app-routes.dart';
 
-void main() {
+Future<void> main() async {
+  Intl.defaultLocale = 'pt_BR';
+  await initializeDateFormatting();
   runApp(MyApp());
 }
 
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'My Orders',
       debugShowCheckedModeBanner: false,
       theme: kAppThemeData,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         AppRoutes.HOME_PAGE: (ctx) => MyHomePage(),
         AppRoutes.LOGIN_PAGE: (ctx) => LoginPage(),
@@ -82,7 +86,9 @@ class MyApp extends StatelessWidget {
             ),
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(),
+        style: TextButton.styleFrom(
+          primary: Colors.orange,
+        ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: TextButton.styleFrom(),

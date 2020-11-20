@@ -3,8 +3,12 @@ import 'package:focused_menu/modals.dart';
 import 'package:my_orders/modules/product/products_provider.dart';
 import 'package:my_orders/utils/number-utils.dart';
 import 'package:my_orders/utils/ui.dart';
+import 'package:my_orders/widgets/app_badge_widget.dart';
 import 'package:my_orders/widgets/app_more_buttons_container.dart';
 import 'package:provider/provider.dart';
+
+import 'product_form_component.dart';
+import 'product_model.dart';
 
 class ProductPage extends StatelessWidget {
   ProductPage(this.title, {Key key}) : super(key: key);
@@ -34,13 +38,26 @@ class ProductPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final pr = await Provider.of<ProductsProvider>(ctx, listen: false).addRandomRegister();
-          showScaffold(ctx, 'Produto ${pr.id}-${pr.description} adicionado com sucesso!');
-        },
-        tooltip: 'Novo Produto',
-        child: Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: null,
+            mini: true,
+            onPressed: () async {
+              final pr = await Provider.of<ProductsProvider>(ctx, listen: false).addRandomRegister();
+              showSnackbar(ctx, 'Produto ${pr.id}-${pr.description} adicionado com sucesso!');
+            },
+            tooltip: 'Gerar Produto',
+            child: const AppBadgeWidget('+', Icon(Icons.cake)),
+          ),
+          FloatingActionButton(
+            heroTag: null,
+            onPressed: () => _addNovoRegistro(ctx),
+            tooltip: 'Novo Produto',
+            child: Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
@@ -92,7 +109,7 @@ class ProductPage extends StatelessWidget {
                                 title: const Text('Excluir'),
                                 onPressed: () async {
                                   await Provider.of<ProductsProvider>(ctx, listen: false).removeRegister(product);
-                                  showScaffold(ctx, 'O produto ${product.id}-${product.description} foi removido.');
+                                  showSnackbar(ctx, 'O produto ${product.id}-${product.description} foi removido.');
                                 },
                               ),
                             ],
@@ -117,6 +134,26 @@ class ProductPage extends StatelessWidget {
   Widget _loadingBar(BuildContext ctx) {
     return Center(
       child: CircularProgressIndicator(),
+    );
+  }
+
+  void _addNovoRegistro(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return ProductForm(onSubmit: (String description, String reference, double value) async {
+          final product = await Provider.of<ProductsProvider>(
+            ctx,
+            listen: false,
+          ).addRegister(Product(
+            description: description,
+            reference: reference,
+            value: value,
+          ));
+          showSnackbar(ctx, 'Produto ${product.id}-${product.description} adicionado com sucesso!');
+          Navigator.of(ctx).pop();
+        });
+      },
     );
   }
 }

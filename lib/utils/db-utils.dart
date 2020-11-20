@@ -7,7 +7,7 @@ class DbUtils {
 
     return sql.openDatabase(
       path.join(dbPath, 'banco.db'),
-      version: 8,
+      version: 9,
       // onUpgrade, drop and create tables
       onUpgrade: (db, oldVersion, newVersion) {
         return Future.wait([

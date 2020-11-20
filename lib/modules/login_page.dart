@@ -34,8 +34,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildText(BuildContext context, String label,
-      {String hint, bool hide = false, TextEditingController ctrl}) {
+  Widget _buildText(BuildContext context, String label, {String hint, bool hide = false, TextEditingController ctrl}) {
     return TextFormField(
       controller: ctrl,
       obscureText: hide,

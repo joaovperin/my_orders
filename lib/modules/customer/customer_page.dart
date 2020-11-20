@@ -1,10 +1,12 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:my_orders/utils/ui.dart';
+import 'package:my_orders/widgets/app_badge_widget.dart';
 import 'package:my_orders/widgets/app_more_buttons_container.dart';
 import 'package:provider/provider.dart';
 
+import 'customer_form_component.dart';
+import 'customer_model.dart';
 import 'customers_provider.dart';
 
 class CustomerPage extends StatelessWidget {
@@ -43,14 +45,14 @@ class CustomerPage extends StatelessWidget {
             mini: true,
             onPressed: () async {
               final pr = await Provider.of<CustomersProvider>(ctx, listen: false).addRandomRegister();
-              showScaffold(ctx, 'Cliente ${pr.id}-${pr.name} adicionado com sucesso!');
+              showSnackbar(ctx, 'Cliente ${pr.id}-${pr.name} adicionado com sucesso!');
             },
             tooltip: 'Gerar Cliente',
-            child: const BadgeWidget('+', Icon(Icons.person_outline_sharp)),
+            child: const AppBadgeWidget('+', Icon(Icons.person_outline_sharp)),
           ),
           FloatingActionButton(
             heroTag: null,
-            onPressed: () => _addNovoCliente(ctx),
+            onPressed: () => _addNovoRegistro(ctx),
             tooltip: 'Novo Cliente',
             child: Icon(Icons.add),
           ),
@@ -131,8 +133,22 @@ class CustomerPage extends StatelessWidget {
     );
   }
 
-  _addNovoCliente(BuildContext ctx) {
-    actionNotImplemented(ctx, 'incluir cliente');
-    //   final pr = await Provider.of<CustomersProvider>(ctx, listen: false).addRandomRegister();
+  void _addNovoRegistro(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return CustomerForm(onSubmit: (String name, String address) async {
+          final customer = await Provider.of<CustomersProvider>(
+            ctx,
+            listen: false,
+          ).addRegister(Customer(
+            name: name,
+            address: address,
+          ));
+          showSnackbar(ctx, 'Cliente ${customer.id}-${customer.name} adicionado com sucesso!');
+          Navigator.of(ctx).pop();
+        });
+      },
+    );
   }
 }

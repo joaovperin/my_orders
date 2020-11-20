@@ -7,11 +7,11 @@ class Customer extends AbstractModel<Customer> {
   final String name;
   final String address;
 
-  Customer(
+  Customer({
     this.id,
     this.name,
     this.address,
-  );
+  });
 
   Customer copyWith({
     int id,
@@ -19,9 +19,9 @@ class Customer extends AbstractModel<Customer> {
     String address,
   }) {
     return Customer(
-      id ?? this.id,
-      name ?? this.name,
-      address ?? this.address,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      address: address ?? this.address,
     );
   }
 
@@ -37,9 +37,9 @@ class Customer extends AbstractModel<Customer> {
     if (map == null) return null;
 
     return Customer(
-      map['id'],
-      map['name'],
-      map['address'],
+      id: map['id'],
+      name: map['name'],
+      address: map['address'],
     );
   }
 

@@ -1,0 +1,15 @@
+### Icons:
+
+icon: add_shopping_cart
+icon: addchart
+icon: attach_money
+icon: business
+icon: cake
+icon: category
+icon: checkroom
+icon: design_services
+icon: emoji_emotions
+icon: emoji_symbols
+icon: emoji_emotions
+icon: fact_check
+icon: filter_list
