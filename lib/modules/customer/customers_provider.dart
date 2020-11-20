@@ -1,44 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:my_orders/modules/customer/customer_model.dart';
-import 'package:my_orders/utils/db-utils.dart';
+import 'package:my_orders/utils/abstract_model.dart';
 import 'package:my_orders/utils/string_utils.dart';
 
-class CustomersProvider with ChangeNotifier {
+class CustomersProvider extends AbstractModelProvider<Customer> {
   static const kTableName = 'customer';
-  final List<Customer> _items = [];
 
-  Future<void> loadRegisters() async {
-    (await DbUtils.query(kTableName)).forEach((e) {
-      _items.add(Customer.fromMap(e));
-    });
+  CustomersProvider() : super(kTableName);
 
-    notifyListeners();
-  }
-
-  List<Customer> get items {
-    return [..._items];
-  }
-
-  int get itemsCount {
-    return _items.length;
-  }
-
-  Customer itemByIndex(int index) {
-    return _items[index];
-  }
-
-  Future<Customer> addRegister(Customer register) async {
-    final registerId = await DbUtils.insert(kTableName, register.toMap());
-    final newRegister = register.copyWith(id: registerId);
-    _items.add(newRegister);
-    notifyListeners();
-    return newRegister;
-  }
-
-  Future<void> removeCustomer(Customer register) async {
-    _items.remove(register);
-    await DbUtils.delete(kTableName, register.id);
-    notifyListeners();
+  @override
+  Customer fromMap(Map<String, dynamic> map) {
+    return Customer.fromMap(map);
   }
 
   Future<Customer> addRandomRegister() async {

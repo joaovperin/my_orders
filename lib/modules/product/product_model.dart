@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class Product {
+import 'package:my_orders/utils/abstract_model.dart';
+
+class Product extends AbstractModel<Product> {
   final int id;
   final String description;
   final String reference;

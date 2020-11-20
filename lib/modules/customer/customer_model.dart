@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class Customer {
+import 'package:my_orders/utils/abstract_model.dart';
+
+class Customer extends AbstractModel<Customer> {
   final int id;
   final String name;
   final String address;
@@ -43,8 +45,7 @@ class Customer {
 
   String toJson() => json.encode(toMap());
 
-  factory Customer.fromJson(String source) =>
-      Customer.fromMap(json.decode(source));
+  factory Customer.fromJson(String source) => Customer.fromMap(json.decode(source));
 
   @override
   String toString() => 'Customer(id: $id, name: $name, address: $address)';
@@ -53,10 +54,7 @@ class Customer {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is Customer &&
-        o.id == id &&
-        o.name == name &&
-        o.address == address;
+    return o is Customer && o.id == id && o.name == name && o.address == address;
   }
 
   @override

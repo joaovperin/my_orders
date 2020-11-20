@@ -91,7 +91,7 @@ class ProductPage extends StatelessWidget {
                                 trailingIcon: Icon(Icons.delete),
                                 title: const Text('Excluir'),
                                 onPressed: () async {
-                                  await Provider.of<ProductsProvider>(ctx, listen: false).removeProduct(product);
+                                  await Provider.of<ProductsProvider>(ctx, listen: false).removeRegister(product);
                                   showScaffold(ctx, 'O produto ${product.id}-${product.description} foi removido.');
                                 },
                               ),
