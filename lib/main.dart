@@ -3,7 +3,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'modules//home_page.dart';
+import 'modules/home_page.dart';
+import 'modules/user/logged_user_provider.dart';
 import 'modules/customer/customer_page.dart';
 import 'modules/customer/customers_provider.dart';
 import 'modules/login_page.dart';
@@ -23,21 +24,9 @@ class MyApp extends StatelessWidget {
     final kAppThemeData = _buildThemeData(context);
     return MaterialApp(
       title: 'My Orders',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: kAppThemeData,
-      initialRoute: '/',
-      routes: {
-        AppRoutes.HOME_PAGE: (ctx) => MyHomePage(),
-        AppRoutes.LOGIN_PAGE: (ctx) => LoginPage(),
-        AppRoutes.PRODUCT_LIST: (ctx) => ChangeNotifierProvider(
-              create: (ctx) => ProductsProvider(),
-              child: ProductPage('Produtos'),
-            ),
-        AppRoutes.CUSTOMER_LIST: (ctx) => ChangeNotifierProvider(
-              create: (ctx) => CustomersProvider(),
-              child: CustomerPage('Clientes'),
-            ),
-      },
+      home: AppRouter(),
     );
   }
 
@@ -99,6 +88,53 @@ class MyApp extends StatelessWidget {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         foregroundColor: Colors.white,
         backgroundColor: Colors.amber,
+      ),
+    );
+  }
+}
+
+class AppRouter extends StatelessWidget {
+  AppRouter({
+    Key key,
+  }) : super(key: key);
+
+// Definição das rotas da aplicação
+  Map get routes => {
+        // Home (módulos)
+        AppRoutes.HOME_PAGE: (ctx) => MyHomePage(),
+        // Login
+        AppRoutes.LOGIN_PAGE: (ctx) => LoginPage(),
+        // Listagem de produtos
+        AppRoutes.PRODUCT_LIST: (ctx) => ChangeNotifierProvider(
+              create: (ctx) => ProductsProvider(),
+              child: ProductPage(),
+            ),
+        // Listagem de clientes
+        AppRoutes.CUSTOMER_LIST: (ctx) => ChangeNotifierProvider(
+              create: (ctx) => CustomersProvider(),
+              child: CustomerPage(),
+            ),
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    return LoggedUserProvider(
+      child: Navigator(
+        // Rota inicial
+        initialRoute: AppRoutes.HOME_PAGE,
+        onGenerateRoute: (settings) {
+          final routeName = settings.name;
+          // Se a rota existir
+          if (routes.containsKey(routeName)) {
+            return MaterialPageRoute(builder: routes[routeName]);
+          }
+          // Rota padrão: página não encontrada
+          return MaterialPageRoute(
+            builder: (context) => Center(
+              child: const Text('Página não encontrada!'),
+            ),
+          );
+        },
       ),
     );
   }

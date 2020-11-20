@@ -3,6 +3,8 @@ import 'package:focused_menu/modals.dart';
 import 'package:my_orders/utils/ui.dart';
 import 'package:my_orders/widgets/app_badge_widget.dart';
 import 'package:my_orders/widgets/app_more_buttons_container.dart';
+import 'package:my_orders/widgets/app_title_text.dart';
+import 'package:my_orders/widgets/app_user_menu.dart';
 import 'package:provider/provider.dart';
 
 import 'customer_form_component.dart';
@@ -10,21 +12,21 @@ import 'customer_model.dart';
 import 'customers_provider.dart';
 
 class CustomerPage extends StatelessWidget {
-  CustomerPage(this.title, {Key key}) : super(key: key);
-  final String title;
+  static const title = 'Clientes';
+
+  CustomerPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext ctx) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: const Text(title),
+        actions: [const AppUserMenu()],
+      ),
       body: Center(
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: 80,
-              child: Text(title),
-            ),
+            const AppTitleText(title),
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(2),

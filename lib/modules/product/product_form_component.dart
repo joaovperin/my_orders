@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_orders/utils/number-utils.dart';
 import 'package:my_orders/widgets/app_cancel_save_buttons.dart';
 
+import 'product_model.dart';
+
 class ProductForm extends StatefulWidget {
   const ProductForm({Key key, this.onSubmit}) : super(key: key);
 
@@ -37,6 +39,7 @@ class _ProductFormState extends State<ProductForm> {
               onSubmitted: (_) => _onSubmit(),
             ),
             TextField(
+              textInputAction: TextInputAction.done,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
                 labelText: 'Valor (${getCurrency()})',

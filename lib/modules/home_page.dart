@@ -2,29 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:my_orders/utils/app-routes.dart';
 import 'package:my_orders/utils/navigator.dart';
 import 'package:my_orders/utils/ui.dart';
+import 'package:my_orders/widgets/app_logo.dart';
+import 'package:my_orders/widgets/app_title_text.dart';
+import 'package:my_orders/widgets/app_user_menu.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key key}) : super(key: key);
+  static const double kSuperiorContainerSize = 120;
+  static const double kItemCardHeigth = 50;
 
   @override
   Widget build(BuildContext ctx) {
-    const double kSuperiorContainerSize = 140;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
+        actions: [const AppUserMenu()],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: kSuperiorContainerSize),
-            Expanded(
-              child: SizedBox(
-                width: double.infinity,
-                child: _card(ctx),
-              ),
+      body: Column(
+        children: [
+          AppLogo(),
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: _card(ctx),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -32,8 +35,9 @@ class MyHomePage extends StatelessWidget {
   Card _card(BuildContext ctx) {
     return Card(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          const AppTitleText('Seja bem vindo!', height: kSuperiorContainerSize),
           _itemCard(ctx, 'Clientes', (_) => pushNamed(ctx, AppRoutes.CUSTOMER_LIST)),
           _itemCard(ctx, 'Produtos', (_) => pushNamed(ctx, AppRoutes.PRODUCT_LIST)),
           _itemCard(ctx, 'Pedidos', (name) => pageNotImplemented(ctx, name)),
@@ -43,7 +47,6 @@ class MyHomePage extends StatelessWidget {
   }
 
   Widget _itemCard(BuildContext ctx, String text, Function(String) onTap) {
-    const double kItemCardHeigth = 50;
     return GestureDetector(
       onTap: () => onTap.call(text),
       child: Card(

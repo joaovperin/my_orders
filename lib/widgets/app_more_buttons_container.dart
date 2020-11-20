@@ -10,7 +10,8 @@ class AppMoreButtonsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final holder = FocusedMenuHolder(
-      blurSize: 2,
+      blurSize: 0,
+      duration: Duration(milliseconds: 50),
       openWithTap: true,
       menuWidth: MediaQuery.of(context).size.width * .5,
       blurBackgroundColor: Colors.black,

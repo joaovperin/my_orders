@@ -1,20 +1,30 @@
-import 'package:flutter/foundation.dart';
-import 'package:my_orders/modules/user/user_model.dart';
+import 'package:flutter/widgets.dart';
 
-class LoggedUserProvider with ChangeNotifier {
-  User loggerdUser;
+class LoggedUserState {
+  String name;
 
-  void login(User user) {
-    this.loggerdUser = user;
-    notifyListeners();
+  bool diff(String oldName) {
+    return oldName == null || name != oldName;
+  }
+}
+
+class LoggedUserProvider extends InheritedWidget {
+  final LoggedUserState state = LoggedUserState();
+
+  LoggedUserProvider({Key key, Widget child}) : super(key: key, child: child);
+
+  static LoggedUserProvider of(BuildContext ctx) => ctx.dependOnInheritedWidgetOfExactType<LoggedUserProvider>();
+
+  String get name => state.name ?? 'Usuário';
+
+  void login(String name) {
+    this.state.name = name;
   }
 
   void logout() {
-    this.loggerdUser = null;
-    notifyListeners();
+    this.state.name = null;
   }
 
-  User fromMap(Map<String, dynamic> map) {
-    return User.fromMap(map);
-  }
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) => true;
 }

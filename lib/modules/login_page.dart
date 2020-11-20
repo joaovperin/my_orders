@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_orders/modules/home_page.dart';
-import 'package:my_orders/utils/api.dart';
 import 'package:my_orders/utils/navigator.dart';
+import 'package:my_orders/modules/user/logged_user_provider.dart';
+import 'package:my_orders/utils/ui.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key}) : super(key: key);
 
-  final _tLogin = TextEditingController();
-  final _tSenha = TextEditingController();
+  final _tNome = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,7 @@ class LoginPage extends StatelessWidget {
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
-          _buildText(ctx, "Login", ctrl: _tLogin),
-          SizedBox(height: 10),
-          _buildText(ctx, "Senha", ctrl: _tSenha, hide: true),
+          _buildText(ctx, "Nome", ctrl: _tNome),
           SizedBox(height: 20),
           _button(ctx, "Login", _onClickLogin),
         ],
@@ -56,18 +54,13 @@ class LoginPage extends StatelessWidget {
   }
 
   void _onClickLogin(BuildContext context) async {
-    String login = _tLogin.text;
-    String senha = _tSenha.text;
-
-    bool ok = await ApiUtils.login(login, senha);
-
-    print("Login: $login, Senha: $senha");
-    if (ok) {
-      push(context, MyHomePage());
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Credenciais inválidas!'),
-      ));
+    final name = _tNome.text.trim();
+    if (name.isEmpty) {
+      showSnackbar(context, 'É necessário informar seu nome!');
+      return;
     }
+
+    LoggedUserProvider.of(context).login(name);
+    push(context, MyHomePage());
   }
 }
