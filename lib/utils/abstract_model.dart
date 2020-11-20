@@ -53,6 +53,10 @@ abstract class AbstractModelProvider<T extends AbstractModel> with ChangeNotifie
     return register;
   }
 
+  Future<List<T>> findAll() async {
+    return find(null, null);
+  }
+
   Future<List<T>> find(String filter, List<dynamic> args) async {
     final list = await DbUtils.query(tableName, where: filter, args: args);
     List<T> response = [];
@@ -82,10 +86,7 @@ abstract class AbstractModelListProvider<T extends AbstractModel> extends Abstra
   AbstractModelListProvider(tableName) : super(tableName);
 
   Future<void> loadList() async {
-    (await DbUtils.query(tableName)).forEach((e) {
-      _list.add(fromMap(e));
-    });
-
+    _list.addAll([...await findAll()]);
     notifyListeners();
   }
 
