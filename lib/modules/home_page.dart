@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_orders/modules/user/logged_user_provider.dart';
 import 'package:my_orders/utils/app-routes.dart';
 import 'package:my_orders/utils/navigator.dart';
-import 'package:my_orders/utils/ui.dart';
 import 'package:my_orders/widgets/app_logo.dart';
 import 'package:my_orders/widgets/app_title_text.dart';
 import 'package:my_orders/widgets/app_user_menu.dart';
@@ -39,7 +38,7 @@ class MyHomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          AppTitleText('Seja bem vindo, ${userProvider.name}', height: kSuperiorContainerSize),
+          AppTitleText('Seja bem vindo, ${userProvider?.name ?? "Usuário"}', height: kSuperiorContainerSize),
           _itemCard(ctx, 'Clientes', () => pushNamed(ctx, AppRoutes.CUSTOMER_LIST)),
           _itemCard(ctx, 'Produtos', () => pushNamed(ctx, AppRoutes.PRODUCT_LIST)),
           _itemCard(ctx, 'Pedidos', () => pushNamed(ctx, AppRoutes.ORDER_LIST)),

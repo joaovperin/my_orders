@@ -49,17 +49,6 @@ class OrderItem extends AbstractModel<OrderItem> {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'orderId': orderId,
-      'sequence': sequence,
-      'productId': productId,
-      'quantity': quantity,
-      'value': value,
-    };
-  }
-
   factory OrderItem.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -98,5 +87,16 @@ class OrderItem extends AbstractModel<OrderItem> {
   @override
   int get hashCode {
     return id.hashCode ^ orderId.hashCode ^ sequence.hashCode ^ productId.hashCode ^ quantity.hashCode ^ value.hashCode;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'orderId': orderId,
+      'sequence': sequence,
+      'productId': productId,
+      'quantity': quantity,
+      'value': value,
+    };
   }
 }

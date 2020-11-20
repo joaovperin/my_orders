@@ -16,7 +16,7 @@ class AppTitleText extends StatelessWidget {
     return Container(
       height: height,
       child: Center(
-        child: Text(text, style: TextStyle(fontSize: 32)),
+        child: Text(text, style: const TextStyle(fontSize: 32)),
       ),
     );
   }

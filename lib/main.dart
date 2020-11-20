@@ -101,7 +101,7 @@ class AppRouter extends StatelessWidget {
   }) : super(key: key);
 
 // Definição das rotas da aplicação
-  Map get routes => {
+  Map<String, Widget Function(BuildContext)> get routes => {
         // Home (módulos)
         AppRoutes.HOME_PAGE: (ctx) => MyHomePage(),
         // Login

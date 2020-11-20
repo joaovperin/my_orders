@@ -89,6 +89,7 @@ abstract class AbstractModelListProvider<T extends AbstractModel> with ChangeNot
 
   Future<T> save(T register) async {
     final newRegister = await dao.save(register);
+    _list.add(newRegister);
     notifyListeners();
     return newRegister;
   }
@@ -111,6 +112,7 @@ abstract class AbstractModelListProvider<T extends AbstractModel> with ChangeNot
 
   Future<void> delete(T register) async {
     await dao.delete(register);
+    _list.remove(register);
     notifyListeners();
   }
 
@@ -124,13 +126,5 @@ abstract class AbstractModelListProvider<T extends AbstractModel> with ChangeNot
 
   T getByIndex(int index) {
     return _list[index];
-  }
-
-  void afterSave(register) {
-    _list.add(register);
-  }
-
-  void afterDelete(register) {
-    _list.remove(register);
   }
 }

@@ -84,7 +84,7 @@ class OrderPage extends StatelessWidget {
                           width: 60,
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
-                            child: _boldText('# ${order.id}'),
+                            child: _boldText('# ${order.customerId}'),
                           ),
                         ),
                       ),

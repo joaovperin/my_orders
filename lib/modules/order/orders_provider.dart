@@ -1,5 +1,7 @@
 import 'package:my_orders/modules/customer/customer_model.dart';
 import 'package:my_orders/utils/abstract_model.dart';
+import 'package:my_orders/utils/date-utils.dart';
+import 'package:my_orders/utils/number-utils.dart';
 
 import 'order_model.dart';
 
@@ -20,11 +22,11 @@ class OrdersPageProvider extends AbstractModelListProvider<Order> {
   }
 
   String fmtEntryDate(Order order) {
-    return '20/11/2020';
+    return fmtDateTime(order.entryDate);
   }
 
   String fmtTotalValue(Order order) {
-    return r'R$ 50.23';
+    return fmtMoney(order.totalValue);
   }
 
   Order fromMap(Map<String, dynamic> map) {
